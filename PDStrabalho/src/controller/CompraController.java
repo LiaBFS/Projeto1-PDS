@@ -107,20 +107,20 @@ public class CompraController {
             }
 
             
-//            StringBuilder nota = new StringBuilder();
-//            nota.append("=== NOTA FISCAL ===\n");
-//            nota.append("Cliente: ").append(usuario.getUser()).append("\n");
-//            nota.append("CPF: ").append(usuario.getCpf()).append("\n\n");
-//            double total = 0;
-//            for (Produtos p : carrinho) {
-//                double subtotal = p.getPreco() * p.getQuantidade();
-//                nota.append(p.getNome()).append(" - Qtd: ").append(p.getQuantidade())
-//                    .append(" - R$ ").append(String.format("%.2f", subtotal)).append("\n");
-//                total += subtotal;
-//            }
-//            nota.append("\nTOTAL: R$ ").append(String.format("%.2f", total));
-//
-//            JOptionPane.showMessageDialog(tela, nota.toString(), "Nota Fiscal", JOptionPane.INFORMATION_MESSAGE);
+            StringBuilder nota = new StringBuilder();
+            nota.append("=== NOTA FISCAL ===\n");
+            nota.append("Cliente: ").append(supermercado.getUsuarioLogado().getUser()).append("\n");
+            nota.append("CPF: ").append(supermercado.getUsuarioLogado().getCpf()).append("\n\n");
+            double total = 0;
+            for (Produtos p : carrinho) {
+                double subtotal = p.getPreco() * p.getQuantidade();
+                nota.append(p.getNome()).append(" - Qtd: ").append(p.getQuantidade())
+                    .append(" - R$ ").append(String.format("%.2f", subtotal)).append("\n");
+                total += subtotal;
+            }
+            nota.append("\nTOTAL: R$ ").append(String.format("%.2f", total));
+
+            JOptionPane.showMessageDialog(tela, nota.toString(), "Nota Fiscal", JOptionPane.INFORMATION_MESSAGE);
 
             
             carrinho.clear();
