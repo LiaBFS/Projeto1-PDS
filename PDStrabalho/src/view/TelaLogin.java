@@ -26,13 +26,13 @@ public class TelaLogin extends JFrame {
 
       
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("", "[189px][189px]", "[50px][50px][50px]"));
+        panel.setLayout(new MigLayout("", "[grow][189px][grow 50][189px][grow]", "[grow][50px][grow 50][50px][grow 50][50px][grow]"));
 
-        panel.add(new JLabel("Usuário:"), "cell 0 0,grow");
+        panel.add(new JLabel("Usuário:"), "cell 1 1,grow");
         txtUser = new JTextField();
-        panel.add(txtUser, "cell 1 0,growx,aligny center");
+        panel.add(txtUser, "cell 3 1,growx,aligny center");
 
-        panel.add(new JLabel("CPF:"), "cell 0 1,grow");
+        panel.add(new JLabel("CPF:"), "cell 1 3,grow");
         
         
         MaskFormatter cpfMask = null;
@@ -50,13 +50,13 @@ public class TelaLogin extends JFrame {
 		}
         
         txtCpf = new JFormattedTextField();
-        panel.add(txtCpf, "cell 1 1,growx,aligny center");
+        panel.add(txtCpf, "cell 3 3,growx,aligny center");
 
         btnLogin = new JButton("Login");
         btnCadastrar = new JButton("Cadastrar");
 
-        panel.add(btnLogin, "cell 0 2,growx,aligny center");
-        panel.add(btnCadastrar, "cell 1 2,growx,aligny center");
+        panel.add(btnLogin, "cell 1 5,growx,aligny center");
+        panel.add(btnCadastrar, "cell 3 5,growx,aligny center");
 
         getContentPane().add(panel, BorderLayout.CENTER);
 

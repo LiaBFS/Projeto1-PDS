@@ -36,13 +36,13 @@ public class TelaCadastro extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[49px][49px][49px][49px]"));
+        panel.setLayout(new MigLayout("", "[grow][][grow][grow][][grow]", "[grow][49px][grow 50][49px][grow 50][49px][grow 50][49px][grow]"));
 
-        panel.add(new JLabel("Usuário:"), "cell 0 0,grow");
+        panel.add(new JLabel("Usuário:"), "cell 1 1,grow");
         txtUser = new JTextField();
-        panel.add(txtUser, "cell 1 0 2 1,growx,aligny center");
+        panel.add(txtUser, "cell 3 1 2 1,growx,aligny center");
 
-        panel.add(new JLabel("CPF:"), "cell 0 1,grow");
+        panel.add(new JLabel("CPF:"), "cell 1 3,grow");
         
         
         MaskFormatter cpfMask = null;
@@ -60,29 +60,29 @@ public class TelaCadastro extends JFrame {
 		}
         
         txtCpf = new JFormattedTextField(cpfMask);
-        panel.add(txtCpf, "cell 1 1 2 1,growx,aligny center");
+        panel.add(txtCpf, "cell 3 3 2 1,growx,aligny center");
         
         
         
 
-        panel.add(new JLabel("Administrador?"), "cell 0 2,grow");
+        panel.add(new JLabel("Administrador?"), "cell 1 5,grow");
         chkAdmin = new JCheckBox("Sim");
-        panel.add(chkAdmin, "cell 1 2,grow");
+        panel.add(chkAdmin, "cell 3 5,grow");
 
         btnCadastrar = new JButton("Cadastrar");
         btnVoltar = new JButton("Voltar");
         
         this.senhaAdmin = new JLabel("Senha:");
-        panel.add(senhaAdmin, "cell 2 2,grow");
+        panel.add(senhaAdmin, "cell 4 5,grow");
         senhaAdmin.setVisible(false);
         
         txtSenhaAdmin = new JPasswordField();
-        panel.add(txtSenhaAdmin, "cell 3 2,growx");
+        panel.add(txtSenhaAdmin, "cell 5 5,growx");
         txtSenhaAdmin.setColumns(10);
         txtSenhaAdmin.setVisible(false);
 
-        panel.add(btnCadastrar, "cell 0 3,growx,aligny center");
-        panel.add(btnVoltar, "cell 1 3,growx,aligny center");
+        panel.add(btnCadastrar, "cell 1 7,growx,aligny center");
+        panel.add(btnVoltar, "cell 3 7,growx,aligny center");
 
         getContentPane().add(panel, BorderLayout.CENTER);
 

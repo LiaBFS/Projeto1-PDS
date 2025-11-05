@@ -32,31 +32,31 @@ public class TelaAdmin extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panelTop = new JPanel();
-        panelTop.setLayout(new MigLayout("", "[191px][191px][191px]", "[23px][23px][23px][23px]"));
+        panelTop.setLayout(new MigLayout("", "[grow][191px,grow 10][grow 50][191px,grow 10][grow 50][191px,grow 10][grow]", "[grow][23px][23px][23px][23px][grow]"));
 
-        panelTop.add(new JLabel("Nome:"), "cell 0 0,grow");
+        panelTop.add(new JLabel("Nome:"), "cell 1 1,grow");
         
                 JLabel label = new JLabel("Preço:");
-                panelTop.add(label, "cell 1 0,grow");
+                panelTop.add(label, "cell 3 1,grow");
         
                 JLabel label_1 = new JLabel("Quantidade:");
-                panelTop.add(label_1, "cell 2 0,grow");
+                panelTop.add(label_1, "cell 5 1,grow");
         txtNome = new JTextField();
-        panelTop.add(txtNome, "cell 0 1,grow");
+        panelTop.add(txtNome, "cell 1 2,grow");
         txtPreco = new JTextField();
-        panelTop.add(txtPreco, "cell 1 1,grow");
+        panelTop.add(txtPreco, "cell 3 2,grow");
         txtQuantidade = new JTextField();
-        panelTop.add(txtQuantidade, "cell 2 1,grow");
+        panelTop.add(txtQuantidade, "cell 5 2,grow");
 
         btnAdicionar = new JButton("Adicionar");
         btnEditar = new JButton("Editar");
         btnRemover = new JButton("Remover");
         btnSair = new JButton("Sair");
 
-        panelTop.add(btnAdicionar, "cell 0 2,grow");
-        panelTop.add(btnEditar, "cell 1 2,grow");
-        panelTop.add(btnRemover, "cell 2 2,grow");
-        panelTop.add(btnSair, "cell 0 3,grow");
+        panelTop.add(btnAdicionar, "cell 1 3,grow");
+        panelTop.add(btnEditar, "cell 3 3,grow");
+        panelTop.add(btnRemover, "cell 5 3,grow");
+        panelTop.add(btnSair, "cell 1 4,grow");
 
         getContentPane().add(panelTop, BorderLayout.NORTH);
 
