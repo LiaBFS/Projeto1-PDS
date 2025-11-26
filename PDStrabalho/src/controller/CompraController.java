@@ -15,6 +15,12 @@ public class CompraController {
     private ProdutosDAO produtosDAO;
     private List<Produtos> carrinho;
     private Navegador navegador;
+    
+    
+    public CompraController (Navegador navegador) {
+    	this.panel = navegador.getPanelCompras();
+    	this.produtosDAO = new ProdutosDAO();
+    }
 
     public CompraController(Navegador navegador, Supermercado supermercado) {
         this.panel = navegador.getPanelCompras();
@@ -122,7 +128,9 @@ public class CompraController {
         for (Produtos p : lista) {
             panel.getModeloProdutos().addRow(new Object[]{
                     p.getNome(), p.getPreco(), p.getQuantidade()
+                    
             });
+            System.out.println(p.getNome()+ p.getPreco()+ p.getQuantidade());
         }
     }
 

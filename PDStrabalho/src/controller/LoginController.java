@@ -12,12 +12,17 @@ public class LoginController {
     private UsuariosDAO usuariosDAO;
     private Supermercado supermercado;
     private Navegador navegador;
+    
+    ProdutoController controllerAdmin;
+    CompraController controllerCliente;
 
     public LoginController(Navegador navegador, Supermercado supermercado) {
         this.panel = navegador.getPanelLogin();
         this.supermercado = supermercado;
         this.navegador = navegador;
         this.usuariosDAO = new UsuariosDAO();
+        this.controllerAdmin = new ProdutoController(navegador);
+        this.controllerCliente = new CompraController(navegador);
         
         this.panel.irCadastro(e -> {
             navegador.mostrarTela("cadastro");
@@ -32,8 +37,10 @@ public class LoginController {
 
                 if (usuario.isAdmin()) {
                     navegador.mostrarTela("admin");
+                    controllerAdmin.carregarProdutos();
                 } else {
                     navegador.mostrarTela("compras");
+                    controllerCliente.carregarProdutos();
                 }
                 
                 panel.getTxtUser().setText("");
@@ -41,6 +48,7 @@ public class LoginController {
             } else {
                 JOptionPane.showMessageDialog(navegador.getJanela(), "Usuário inexistente");
             }
+            
         });
     }
 

@@ -13,6 +13,12 @@ public class ProdutoController {
     private Supermercado supermercado;
     private ProdutosDAO produtosDAO;
     private Navegador navegador;
+    
+    
+    public ProdutoController(Navegador navegador) {
+    	this.produtosDAO = new ProdutosDAO();
+    	this.panel = navegador.getPanelAdmin();
+    }
 
     public ProdutoController(Navegador navegador, Supermercado supermercado) {
         this.panel = navegador.getPanelAdmin();
@@ -20,7 +26,7 @@ public class ProdutoController {
         this.navegador = navegador;
         this.produtosDAO = new ProdutosDAO();
         
-        carregarProdutos();
+       
         
         this.panel.sair(e -> {
             navegador.mostrarTela("login");
@@ -117,6 +123,7 @@ public class ProdutoController {
         for (Produtos p : lista) {
             panel.getModeloTabela().addRow(new Object[]{
                     p.getNome(), p.getPreco(), p.getQuantidade()
+                   
             });
         }
     }
