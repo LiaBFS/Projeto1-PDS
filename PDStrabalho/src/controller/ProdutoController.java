@@ -3,45 +3,36 @@ package controller;
 import model.Produtos;
 import model.ProdutosDAO;
 import model.Supermercado;
-import view.TelaAdmin;
-import view.TelaLogin;
+import view.PanelAdmin;
 
 import javax.swing.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoController {
-    private TelaAdmin tela;
+    private PanelAdmin panel;
     private Supermercado supermercado;
     private ProdutosDAO produtosDAO;
-
+    private Navegador navegador;
 
     public ProdutoController(Navegador navegador, Supermercado supermercado) {
-        this.tela = navegador.getTelaAdmin();
+        this.panel = navegador.getPanelAdmin();
         this.supermercado = supermercado;
+        this.navegador = navegador;
         this.produtosDAO = new ProdutosDAO();
         
         carregarProdutos();
         
-        
-        this.tela.sair(e -> {
-        	
-        	navegador.fecharTela(tela);
-        	navegador.mostrarTela("login");
-        	
-        	
+        this.panel.sair(e -> {
+            navegador.mostrarTela("login");
         });
         
-        
-        this.tela.adicionarProduto(e -> {
-        	
-        	String nome = tela.getTxtNome().getText().trim();
-            String precoStr = tela.getTxtPreco().getText().trim();
-            String qtdStr = tela.getTxtQuantidade().getText().trim();
+        this.panel.adicionarProduto(e -> {
+            String nome = panel.getTxtNome().getText().trim();
+            String precoStr = panel.getTxtPreco().getText().trim();
+            String qtdStr = panel.getTxtQuantidade().getText().trim();
 
             if (nome.isEmpty() || precoStr.isEmpty() || qtdStr.isEmpty()) {
-                JOptionPane.showMessageDialog(tela, "Preencha todos os campos.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Preencha todos os campos.");
                 return;
             }
 
@@ -55,32 +46,29 @@ public class ProdutoController {
                 novo.setQuantidade(quantidade);
 
                 produtosDAO.inserirProduto(novo);
-                JOptionPane.showMessageDialog(tela, "Produto cadastrado com sucesso.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Produto cadastrado com sucesso.");
                 carregarProdutos();
 
             } catch (NumberFormatException i) {
-                JOptionPane.showMessageDialog(tela, "Preço e quantidade devem ser numéricos.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Preço e quantidade devem ser numéricos.");
             }
-        	
         });
         
-        
-        this.tela.editarProduto(e -> {
-        	
-        	int linha = tela.getTabelaProdutos().getSelectedRow();
+        this.panel.editarProduto(e -> {
+            int linha = panel.getTabelaProdutos().getSelectedRow();
             if (linha == -1) {
-                JOptionPane.showMessageDialog(tela, "Selecione um produto.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Selecione um produto.");
                 return;
             }
 
-            String nomeOriginal = (String) tela.getModeloTabela().getValueAt(linha, 0);
+            String nomeOriginal = (String) panel.getModeloTabela().getValueAt(linha, 0);
 
-            String novoNome = tela.getTxtNome().getText().trim();
-            String precoStr = tela.getTxtPreco().getText().trim();
-            String qtdStr = tela.getTxtQuantidade().getText().trim();
+            String novoNome = panel.getTxtNome().getText().trim();
+            String precoStr = panel.getTxtPreco().getText().trim();
+            String qtdStr = panel.getTxtQuantidade().getText().trim();
 
             if (novoNome.isEmpty() || precoStr.isEmpty() || qtdStr.isEmpty()) {
-                JOptionPane.showMessageDialog(tela, "Preencha todos os campos.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Preencha todos os campos.");
                 return;
             }
 
@@ -94,49 +82,42 @@ public class ProdutoController {
                 editado.setQuantidade(quantidade);
 
                 produtosDAO.atualizarProduto(nomeOriginal, editado);
-                JOptionPane.showMessageDialog(tela, "Produto atualizado.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Produto atualizado.");
                 carregarProdutos();
 
             } catch (NumberFormatException i) {
-                JOptionPane.showMessageDialog(tela, "Escolha um Preço e Quantidade válidos.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Escolha um Preço e Quantidade válidos.");
             }
-        	
         });
         
-        this.tela.removerProduto(e -> {
-        	
-            int linha = tela.getTabelaProdutos().getSelectedRow();
+        this.panel.removerProduto(e -> {
+            int linha = panel.getTabelaProdutos().getSelectedRow();
             if (linha == -1) {
-                JOptionPane.showMessageDialog(tela, "Selecione um produto.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Selecione um produto.");
                 return;
             }
 
-            String nome = (String) tela.getModeloTabela().getValueAt(linha, 0);
+            String nome = (String) panel.getModeloTabela().getValueAt(linha, 0);
 
-            int confirm = JOptionPane.showConfirmDialog(tela,
+            int confirm = JOptionPane.showConfirmDialog(navegador.getJanela(),
                     "Remover o produto " + nome + "?", "Confirmação",
                     JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
                 produtosDAO.removerProduto(nome);
-                JOptionPane.showMessageDialog(tela, "Produto removido com sucesso.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Produto removido com sucesso.");
                 carregarProdutos();
             }
-        	
         });
-        
-        
     }
 
     public void carregarProdutos() {
         List<Produtos> lista = produtosDAO.listarProdutos();
-        tela.getModeloTabela().setRowCount(0);
+        panel.getModeloTabela().setRowCount(0);
         for (Produtos p : lista) {
-            tela.getModeloTabela().addRow(new Object[]{
+            panel.getModeloTabela().addRow(new Object[]{
                     p.getNome(), p.getPreco(), p.getQuantidade()
             });
         }
     }
-
-    
 }

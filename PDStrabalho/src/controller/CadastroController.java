@@ -3,83 +3,65 @@ package controller;
 import model.UsuariosDAO;
 import model.Usuarios;
 import model.Supermercado;
-import view.TelaCadastro;
-import view.TelaLogin;
+import view.PanelCadastro;
 
 import javax.swing.*;
 
 public class CadastroController {
-    private TelaCadastro tela;
+    private PanelCadastro panel;
     private UsuariosDAO usuariosDAO;
     private Supermercado supermercado;
+    private Navegador navegador;
 
     public CadastroController(Navegador navegador, Supermercado supermercado) {
-        this.tela = navegador.getTelaCadastro();
+        this.panel = navegador.getPanelCadastro();
         this.supermercado = supermercado;
+        this.navegador = navegador;
         this.usuariosDAO = new UsuariosDAO();
         
-        
-        this.tela.cadastrar(e -> {
-            String user = tela.getUser().trim();
-            String cpf = tela.getCpf().trim();
-            String senhaAdmin = tela.getTextoSenhaAdmin();
-            boolean admin = tela.getChkAdmin().isSelected();
+        this.panel.cadastrar(e -> {
+            String user = panel.getUser().trim();
+            String cpf = panel.getCpf().trim();
+            String senhaAdmin = panel.getTextoSenhaAdmin();
+            boolean admin = panel.getChkAdmin().isSelected();
             
             if(user.isEmpty() || cpf.isEmpty()) {
-            	JOptionPane.showMessageDialog(tela, "Preencha todos os campos.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Preencha todos os campos.");
                 return;
             }
-            if(tela.getChkAdmin().isSelected()) {
-            	
-            	if(!tela.getTextoSenhaAdmin().equals("admin")) {
-            		JOptionPane.showMessageDialog(tela, "Senha Incorreta. Cadastro não realizado.");
-            		return;
-            		
-            	}
-            	
-            }
             
+            if(panel.getChkAdmin().isSelected()) {
+                if(!panel.getTextoSenhaAdmin().equals("admin")) {
+                    JOptionPane.showMessageDialog(navegador.getJanela(), "Senha Incorreta. Cadastro não realizado.");
+                    return;
+                }
+            }
             
             Usuarios usuario = new Usuarios(user, cpf, admin);
             usuariosDAO.inserirUsuario(usuario);
             
+            JOptionPane.showMessageDialog(navegador.getJanela(), "Usuário cadastrado");
             
-            JOptionPane.showMessageDialog(tela, "Usuário cadastrado");
-            
-            tela.getTxtUser().setText("");
-            tela.getTxtCPF().setText("");
-            tela.getTxtSenhaAdmin().setText("");
-            tela.getChkAdmin().setSelected(false);
-            
+            panel.getTxtUser().setText("");
+            panel.getTxtCPF().setText("");
+            panel.getTxtSenhaAdmin().setText("");
+            panel.getChkAdmin().setSelected(false);
             
             navegador.mostrarTela("login");
-            navegador.fecharTela(this.tela);
-
-            
         });
         
-        this.tela.registrarAcaoChkAdmin(e -> {
-        	if(this.tela.getChkAdmin().isSelected()) {
-        		this.tela.getSenhaAdmin().setVisible(true);
-        		this.tela.getTxtSenhaAdmin().setVisible(true);
-        	}
-        	else {
-        		this.tela.getSenhaAdmin().setVisible(false);
-        		this.tela.getTxtSenhaAdmin().setVisible(false);
-        	}
-        	
+        this.panel.registrarAcaoChkAdmin(e -> {
+            if(this.panel.getChkAdmin().isSelected()) {
+                this.panel.getSenhaAdmin().setVisible(true);
+                this.panel.getTxtSenhaAdmin().setVisible(true);
+            } else {
+                this.panel.getSenhaAdmin().setVisible(false);
+                this.panel.getTxtSenhaAdmin().setVisible(false);
+            }
         });
         
-        this.tela.voltar(e -> {
-        	
-        	navegador.mostrarTela("login");
-            navegador.fecharTela(this.tela);
-        	
+        this.panel.voltar(e -> {
+            navegador.mostrarTela("login");
         });
-        
-        
-        
     }
-
-    
 }

@@ -1,79 +1,43 @@
 package controller;
 
-import javax.swing.JFrame;
-
-import view.TelaAdmin;
-import view.TelaCadastro;
-import view.TelaCompras;
-import view.TelaLogin;
+import view.Janela;
+import view.PanelAdmin;
+import view.PanelCadastro;
+import view.PanelCompras;
+import view.PanelLogin;
 
 public class Navegador {
-	
-	
-	private TelaAdmin telaAdmin;
-	private TelaCadastro telaCadastro;
-	private TelaCompras telaCompras;
-	private TelaLogin telaLogin;
-	
-	
-	
+    
+    private Janela janela;
 
-	public Navegador() {
-		
-		this.telaAdmin = new TelaAdmin();
-		this.telaCadastro = new TelaCadastro();
-		this.telaCompras = new TelaCompras();
-		this.telaLogin = new TelaLogin();
-		
-		
-		mostrarTela("login");
-		
-		
-	}
-	
-	
-	public void mostrarTela(String nomeTela) {
-		
-		this.telaAdmin.setVisible(false);
-		this.telaCadastro.setVisible(false);
-		this.telaCompras.setVisible(false);
-		this.telaLogin.setVisible(false);
-		
-		if(nomeTela.equals("admin")) {
-			this.telaAdmin.setVisible(true);
-		}
-		if(nomeTela.equals("login")) {
-			this.telaLogin.setVisible(true);
-		}
-		if(nomeTela.equals("cadastro")) {
-			this.telaCadastro.setVisible(true);
-		}
-		if(nomeTela.equals("compras")) {
-			this.telaCompras.setVisible(true);
-		}
-		
-	}
-	
-	
-	public void fecharTela(JFrame tela) {
-		tela.setVisible(false);
-	}
-	
-	public TelaCadastro getTelaCadastro() {
-		return telaCadastro;
-	}
-	
-
-	public TelaLogin getTelaLogin() {
-		return telaLogin;
-	}
-	
-	public TelaCompras getTelaCompras() {
-		return telaCompras;
-	}
-
-	public TelaAdmin getTelaAdmin() {
-		return telaAdmin;
-	}
-
+    public Navegador() {
+        this.janela = new Janela();
+        this.janela.setVisible(true);
+    }
+    
+    public void mostrarTela(String nomeTela) {
+        janela.mostrarTela(nomeTela);
+    }
+    
+    // Não precisa mais do método fecharTela, pois trabalhamos com um único JFrame
+    
+    public PanelLogin getPanelLogin() {
+        return janela.getPanelLogin();
+    }
+    
+    public PanelCadastro getPanelCadastro() {
+        return janela.getPanelCadastro();
+    }
+    
+    public PanelAdmin getPanelAdmin() {
+        return janela.getPanelAdmin();
+    }
+    
+    public PanelCompras getPanelCompras() {
+        return janela.getPanelCompras();
+    }
+    
+    public Janela getJanela() {
+        return janela;
+    }
 }

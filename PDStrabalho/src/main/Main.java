@@ -6,7 +6,7 @@ import controller.LoginController;
 import controller.Navegador;
 import controller.ProdutoController;
 import model.Supermercado;
-import view.TelaLogin;
+import view.PanelLogin;
 
 public class Main {
     public static void main(String[] args) {

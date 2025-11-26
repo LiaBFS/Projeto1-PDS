@@ -1,15 +1,13 @@
 package view;
 
-import controller.ProdutoController;
-import model.Supermercado;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import net.miginfocom.swing.MigLayout;
 
-public class TelaAdmin extends JFrame {
+public class PanelAdmin extends JPanel {
+    
     private JTextField txtNome;
     private JTextField txtPreco;
     private JTextField txtQuantidade;
@@ -20,27 +18,20 @@ public class TelaAdmin extends JFrame {
     private JTable tabelaProdutos;
     private DefaultTableModel modeloTabela;
 
-    
-
-    public TelaAdmin() {
-        super("Administração de Produtos");
-
-        
-
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+    public PanelAdmin() {
+        setLayout(new BorderLayout());
 
         JPanel panelTop = new JPanel();
         panelTop.setLayout(new MigLayout("", "[grow][191px,grow 10][grow 50][191px,grow 10][grow 50][191px,grow 10][grow]", "[grow][23px][23px][23px][23px][grow]"));
 
         panelTop.add(new JLabel("Nome:"), "cell 1 1,grow");
         
-                JLabel label = new JLabel("Preço:");
-                panelTop.add(label, "cell 3 1,grow");
+        JLabel label = new JLabel("Preço:");
+        panelTop.add(label, "cell 3 1,grow");
         
-                JLabel label_1 = new JLabel("Quantidade:");
-                panelTop.add(label_1, "cell 5 1,grow");
+        JLabel label_1 = new JLabel("Quantidade:");
+        panelTop.add(label_1, "cell 5 1,grow");
+        
         txtNome = new JTextField();
         panelTop.add(txtNome, "cell 1 2,grow");
         txtPreco = new JTextField();
@@ -58,60 +49,46 @@ public class TelaAdmin extends JFrame {
         panelTop.add(btnRemover, "cell 5 3,grow");
         panelTop.add(btnSair, "cell 1 4,grow");
 
-        getContentPane().add(panelTop, BorderLayout.NORTH);
+        add(panelTop, BorderLayout.NORTH);
 
-       
         modeloTabela = new DefaultTableModel(new Object[]{"Nome", "Preço", "Quantidade"}, 0);
         tabelaProdutos = new JTable(modeloTabela);
-        getContentPane().add(new JScrollPane(tabelaProdutos), BorderLayout.CENTER);
-
-        
-       
-
-
-
-
-
+        add(new JScrollPane(tabelaProdutos), BorderLayout.CENTER);
     }
 
-  
     public JTextField getTxtNome() { 
-    	return txtNome; 
-    	
+        return txtNome; 
     }
+    
     public JTextField getTxtPreco() { 
-    	return txtPreco; 
-    	
+        return txtPreco; 
     }
+    
     public JTextField getTxtQuantidade() { 
-    	return txtQuantidade; 
-    	
+        return txtQuantidade; 
     }
+    
     public DefaultTableModel getModeloTabela() { 
-    	return modeloTabela; 
-    	
+        return modeloTabela; 
     }
+    
     public JTable getTabelaProdutos() { 
-    	return tabelaProdutos; 
-    	
+        return tabelaProdutos; 
     }
     
     public void adicionarProduto(ActionListener actionListener) {
-    	this.btnAdicionar.addActionListener(actionListener);
+        this.btnAdicionar.addActionListener(actionListener);
     }
     
     public void editarProduto(ActionListener actionListener) {
-    	this.btnEditar.addActionListener(actionListener);
+        this.btnEditar.addActionListener(actionListener);
     }
     
     public void removerProduto(ActionListener actionListener) {
-    	this.btnRemover.addActionListener(actionListener);
+        this.btnRemover.addActionListener(actionListener);
     }
     
     public void sair(ActionListener actionListener) {
-    	this.btnSair.addActionListener(actionListener);
+        this.btnSair.addActionListener(actionListener);
     }
-    
-    
-    
 }

@@ -3,63 +3,48 @@ package controller;
 import model.UsuariosDAO;
 import model.Usuarios;
 import model.Supermercado;
-import view.TelaLogin;
-import view.TelaCadastro;
-import view.TelaAdmin;
-import view.TelaCompras;
+import view.PanelLogin;
 
 import javax.swing.*;
 
 public class LoginController {
-    private TelaLogin tela;
+    private PanelLogin panel;
     private UsuariosDAO usuariosDAO;
     private Supermercado supermercado;
+    private Navegador navegador;
 
     public LoginController(Navegador navegador, Supermercado supermercado) {
-        this.tela = navegador.getTelaLogin();
+        this.panel = navegador.getPanelLogin();
         this.supermercado = supermercado;
+        this.navegador = navegador;
         this.usuariosDAO = new UsuariosDAO();
         
-        
-        this.tela.irCadastro(e -> {
-        
-        	navegador.mostrarTela("cadastro");
-        	navegador.fecharTela(tela);
-        	
+        this.panel.irCadastro(e -> {
+            navegador.mostrarTela("cadastro");
         });
         
-        this.tela.login(e -> {
-        	Usuarios usuario = usuariosDAO.buscarUsuario(tela.getUser(), tela.getCpf());
+        this.panel.login(e -> {
+            Usuarios usuario = usuariosDAO.buscarUsuario(panel.getUser(), panel.getCpf());
 
             if (usuario != null) {
                 supermercado.setUsuarioLogado(usuario);
-                JOptionPane.showMessageDialog(tela, "Login realizado.");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Login realizado.");
 
                 if (usuario.isAdmin()) {
                     navegador.mostrarTela("admin");
-                    
                 } else {
                     navegador.mostrarTela("compras");
                 }
                 
-                tela.getTxtUser().setText("");
-                tela.getTxtCPF().setText("");
-                
-                navegador.fecharTela(tela);
+                panel.getTxtUser().setText("");
+                panel.getTxtCPF().setText("");
             } else {
-                JOptionPane.showMessageDialog(tela, "Usuário inexistente");
+                JOptionPane.showMessageDialog(navegador.getJanela(), "Usuário inexistente");
             }
-        	
         });
-        
     }
 
-
-
-   
-
-	public void iniciarLogin() {
-		this.tela.setVisible(true);
-		
-	}
+    public void iniciarLogin() {
+        navegador.mostrarTela("login");
+    }
 }
