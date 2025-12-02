@@ -16,11 +16,11 @@ public class PanelLogin extends JPanel {
     public PanelLogin() {
         setLayout(new MigLayout("", "[grow][189px][grow 50][189px][grow]", "[grow][50px][grow 50][50px][grow 50][50px][grow]"));
 
-        add(new JLabel("Usuário:"), "cell 1 1,grow");
+        add(new JLabel("Usuário:"), "cell 1 1,alignx right,growy");
         txtUser = new JTextField();
         add(txtUser, "cell 3 1,growx,aligny center");
 
-        add(new JLabel("CPF:"), "cell 1 3,grow");
+        add(new JLabel("CPF:"), "cell 1 3,alignx right,growy");
         
         MaskFormatter cpfMask = null;
         try {

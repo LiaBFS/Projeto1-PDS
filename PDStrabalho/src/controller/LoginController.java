@@ -1,5 +1,6 @@
 package controller;
 
+import exceptions.*;
 import model.UsuariosDAO;
 import model.Usuarios;
 import model.Supermercado;
@@ -29,11 +30,23 @@ public class LoginController {
         });
         
         this.panel.login(e -> {
-            Usuarios usuario = usuariosDAO.buscarUsuario(panel.getUser(), panel.getCpf());
-
-            if (usuario != null) {
+            try {
+                String user = panel.getUser().trim();
+                String cpf = panel.getCpf().trim();
+                
+                if (user.isEmpty() || cpf.isEmpty()) {
+                    throw new ValidacaoException("Preencha todos os campos.");
+                }
+                
+                Usuarios usuario = usuariosDAO.buscarUsuario(user, cpf);
+                
                 supermercado.setUsuarioLogado(usuario);
-                JOptionPane.showMessageDialog(navegador.getJanela(), "Login realizado.");
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    "Login realizado com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
 
                 if (usuario.isAdmin()) {
                     navegador.mostrarTela("admin");
@@ -45,10 +58,41 @@ public class LoginController {
                 
                 panel.getTxtUser().setText("");
                 panel.getTxtCPF().setText("");
-            } else {
-                JOptionPane.showMessageDialog(navegador.getJanela(), "Usuário inexistente");
+                
+            } catch (ValidacaoException ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    ex.getMessage(),
+                    "Validação",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                
+            } catch (UsuarioNaoEncontradoException ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    ex.getMessage(),
+                    "Login Falhou",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                
+            } catch (BancoDadosException ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    "Erro ao acessar o sistema. Tente novamente mais tarde.",
+                    "Erro no Sistema",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                ex.printStackTrace();
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    "Erro inesperado: " + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                ex.printStackTrace();
             }
-            
         });
     }
 

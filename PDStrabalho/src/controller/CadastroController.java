@@ -1,10 +1,10 @@
 package controller;
 
+import exceptions.*;
 import model.UsuariosDAO;
 import model.Usuarios;
 import model.Supermercado;
 import view.PanelCadastro;
-
 import javax.swing.*;
 
 public class CadastroController {
@@ -20,34 +20,71 @@ public class CadastroController {
         this.usuariosDAO = new UsuariosDAO();
         
         this.panel.cadastrar(e -> {
-            String user = panel.getUser().trim();
-            String cpf = panel.getCpf().trim();
-            String senhaAdmin = panel.getTextoSenhaAdmin();
-            boolean admin = panel.getChkAdmin().isSelected();
-            
-            if(user.isEmpty() || cpf.isEmpty()) {
-                JOptionPane.showMessageDialog(navegador.getJanela(), "Preencha todos os campos.");
-                return;
-            }
-            
-            if(panel.getChkAdmin().isSelected()) {
-                if(!panel.getTextoSenhaAdmin().equals("admin")) {
-                    JOptionPane.showMessageDialog(navegador.getJanela(), "Senha Incorreta. Cadastro não realizado.");
-                    return;
+            try {
+                String user = panel.getUser().trim();
+                String cpf = panel.getCpf().trim();
+                String senhaAdmin = panel.getTextoSenhaAdmin();
+                boolean admin = panel.getChkAdmin().isSelected();
+                
+                if(user.isEmpty() || cpf.isEmpty()) {
+                    throw new ValidacaoException("Preencha todos os campos.");
                 }
+                
+                if(admin && !senhaAdmin.equals("admin")) {
+                    throw new ValidacaoException("Senha de administrador incorreta. Cadastro não realizado.");
+                }
+                
+                Usuarios usuario = new Usuarios(user, cpf, admin);
+                usuariosDAO.inserirUsuario(usuario);
+                
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    "Usuário cadastrado com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                
+                panel.getTxtUser().setText("");
+                panel.getTxtCPF().setText("");
+                panel.getTxtSenhaAdmin().setText("");
+                panel.getChkAdmin().setSelected(false);
+                
+                navegador.mostrarTela("login");
+                
+            } catch (ValidacaoException ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    ex.getMessage(),
+                    "Erro de Validação",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                
+            } catch (UsuarioDuplicadoException ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    ex.getMessage(),
+                    "Usuário Duplicado",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                
+            } catch (BancoDadosException ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    "Erro ao cadastrar usuário. Tente novamente.",
+                    "Erro no Sistema",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                ex.printStackTrace();
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(
+                    navegador.getJanela(), 
+                    "Erro inesperado: " + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                ex.printStackTrace();
             }
-            
-            Usuarios usuario = new Usuarios(user, cpf, admin);
-            usuariosDAO.inserirUsuario(usuario);
-            
-            JOptionPane.showMessageDialog(navegador.getJanela(), "Usuário cadastrado");
-            
-            panel.getTxtUser().setText("");
-            panel.getTxtCPF().setText("");
-            panel.getTxtSenhaAdmin().setText("");
-            panel.getChkAdmin().setSelected(false);
-            
-            navegador.mostrarTela("login");
         });
         
         this.panel.registrarAcaoChkAdmin(e -> {
