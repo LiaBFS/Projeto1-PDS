@@ -19,7 +19,7 @@ public class Navegador {
         janela.mostrarTela(nomeTela);
     }
     
-    // Não precisa mais do método fecharTela, pois trabalhamos com um único JFrame
+    
     
     public PanelLogin getPanelLogin() {
         return janela.getPanelLogin();

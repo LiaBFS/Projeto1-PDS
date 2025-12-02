@@ -7,22 +7,22 @@ import java.util.List;
 
 public class UsuariosDAO {
 
-    // Inserir usuário
+ 
     public void inserirUsuario(Usuarios usuario) 
             throws BancoDadosException, ValidacaoException, UsuarioDuplicadoException {
         
-        // Validações
+      
         if (usuario.getUser() == null || usuario.getUser().trim().isEmpty()) {
-            throw new ValidacaoException("Nome de usuário não pode ser vazio");
+            throw new ValidacaoException("nome de usuário vazio");
         }
         if (usuario.getCpf() == null || usuario.getCpf().trim().isEmpty()) {
-            throw new ValidacaoException("CPF não pode ser vazio");
+            throw new ValidacaoException("CPF vazio");
         }
         if (!validarCPF(usuario.getCpf())) {
-            throw new ValidacaoException("CPF inválido");
+            throw new ValidacaoException("CPF inválido.");
         }
         
-        // Verifica se já existe usuário com este CPF
+        
         if (buscarUsuarioPorCpf(usuario.getCpf()) != null) {
             throw new UsuarioDuplicadoException(usuario.getCpf());
         }
@@ -36,14 +36,14 @@ public class UsuariosDAO {
             stmt.setBoolean(3, usuario.isAdmin());
 
             stmt.executeUpdate();
-            System.out.println("Usuário cadastrado com sucesso!");
+            
             
         } catch (SQLException e) {
             throw new BancoDadosException("Erro ao inserir usuário", e);
         }
     }
 
-    // Buscar usuário por CPF e nome (login)
+
     public Usuarios buscarUsuario(String user, String cpf) 
             throws BancoDadosException, UsuarioNaoEncontradoException {
         
@@ -70,7 +70,7 @@ public class UsuariosDAO {
         }
     }
     
-    // Método auxiliar para buscar por CPF (usado na validação)
+
     private Usuarios buscarUsuarioPorCpf(String cpf) throws BancoDadosException {
         String sql = "SELECT * FROM usuarios WHERE cpf = ?";
         try (Connection conn = BancoDeDados.conectar();
@@ -92,7 +92,7 @@ public class UsuariosDAO {
         return null;
     }
 
-    // Listar todos os usuários
+ 
     public List<Usuarios> listarUsuarios() throws BancoDadosException {
         List<Usuarios> usuarios = new ArrayList<>();
         String sql = "SELECT * FROM usuarios";
@@ -132,17 +132,17 @@ public class UsuariosDAO {
         }
     }
     
-    // Validação simples de CPF (apenas formato)
+
     private boolean validarCPF(String cpf) {
-        // Remove pontos e traços
+       
         cpf = cpf.replaceAll("[^0-9]", "");
         
-        // CPF deve ter 11 dígitos
+       
         if (cpf.length() != 11) {
             return false;
         }
         
-        // Verifica se todos os dígitos são iguais (ex: 111.111.111-11)
+     
         if (cpf.matches("(\\d)\\1{10}")) {
             return false;
         }

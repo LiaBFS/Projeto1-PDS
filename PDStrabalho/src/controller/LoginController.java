@@ -43,7 +43,7 @@ public class LoginController {
                 supermercado.setUsuarioLogado(usuario);
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Login realizado com sucesso!",
+                    "Login realizado",
                     "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE
                 );
@@ -78,7 +78,7 @@ public class LoginController {
             } catch (BancoDadosException ex) {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Erro ao acessar o sistema. Tente novamente mais tarde.",
+                    "Erro no sistema",
                     "Erro no Sistema",
                     JOptionPane.ERROR_MESSAGE
                 );

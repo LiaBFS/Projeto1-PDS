@@ -7,14 +7,14 @@ import java.util.List;
 
 public class ProdutosDAO {
 
-    // Inserir produto com tratamento de exceção
+   
     public void inserirProduto(Produtos produto) throws BancoDadosException, ValidacaoException {
-        // Validação
+        
         if (produto.getNome() == null || produto.getNome().trim().isEmpty()) {
-            throw new ValidacaoException("Nome do produto não pode ser vazio");
+            throw new ValidacaoException("Nome do produto vazio");
         }
         if (produto.getPreco() <= 0) {
-            throw new ValidacaoException("Preço deve ser maior que zero");
+            throw new ValidacaoException("preço deve ser maior que zero");
         }
         if (produto.getQuantidade() < 0) {
             throw new ValidacaoException("Quantidade não pode ser negativa");
@@ -29,18 +29,18 @@ public class ProdutosDAO {
             stmt.setInt(3, produto.getQuantidade());
 
             stmt.executeUpdate();
-            System.out.println("Produto cadastrado!");
+            
             
         } catch (SQLException e) {
             throw new BancoDadosException("Erro ao inserir produto", e);
         }
     }
 
-    // Atualizar produto
+  
     public void atualizarProduto(String nomeOriginal, Produtos produto) 
             throws BancoDadosException, ValidacaoException, ProdutoNaoEncontradoException {
         
-        // Validação
+      
         if (produto.getPreco() <= 0) {
             throw new ValidacaoException("Preço deve ser maior que zero");
         }
@@ -48,7 +48,7 @@ public class ProdutosDAO {
             throw new ValidacaoException("Quantidade não pode ser negativa");
         }
         
-        // Verifica se o produto existe
+        
         if (buscarProduto(nomeOriginal) == null) {
             throw new ProdutoNaoEncontradoException(nomeOriginal);
         }
@@ -63,16 +63,16 @@ public class ProdutosDAO {
             stmt.setString(4, nomeOriginal);
 
             stmt.executeUpdate();
-            System.out.println("Produto atualizado!");
+            
             
         } catch (SQLException e) {
             throw new BancoDadosException("Erro ao atualizar produto", e);
         }
     }
 
-    // Remover produto
+   
     public void removerProduto(String nome) throws BancoDadosException, ProdutoNaoEncontradoException {
-        // Verifica se existe
+        
         if (buscarProduto(nome) == null) {
             throw new ProdutoNaoEncontradoException(nome);
         }
@@ -83,14 +83,14 @@ public class ProdutosDAO {
 
             stmt.setString(1, nome);
             stmt.executeUpdate();
-            System.out.println("Produto removido!");
+    
             
         } catch (SQLException e) {
             throw new BancoDadosException("Erro ao remover produto", e);
         }
     }
 
-    // Buscar produto por nome
+   
     public Produtos buscarProduto(String nome) throws BancoDadosException {
         String sql = "SELECT * FROM produtos WHERE nome = ?";
         try (Connection conn = BancoDeDados.conectar();
@@ -112,7 +112,7 @@ public class ProdutosDAO {
         return null;
     }
 
-    // Listar produtos
+
     public List<Produtos> listarProdutos() throws BancoDadosException {
         List<Produtos> produtos = new ArrayList<>();
         String sql = "SELECT * FROM produtos";
@@ -135,11 +135,11 @@ public class ProdutosDAO {
         return produtos;
     }
 
-    // Diminuir estoque
+ 
     public void diminuirEstoque(String nome, int quantidade) 
             throws BancoDadosException, EstoqueInsuficienteException, ProdutoNaoEncontradoException {
         
-        // Verifica se há estoque suficiente
+     
         Produtos produto = buscarProduto(nome);
         if (produto == null) {
             throw new ProdutoNaoEncontradoException(nome);

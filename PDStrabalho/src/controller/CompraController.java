@@ -158,12 +158,12 @@ public class CompraController {
                     throw new ValidacaoException("Carrinho está vazio.");
                 }
 
-                // Diminui estoque de cada produto
+             
                 for (Produtos item : carrinho) {
                     produtosDAO.diminuirEstoque(item.getNome(), item.getQuantidade());
                 }
 
-                // Gera nota fiscal
+              
                 StringBuilder nota = new StringBuilder();
                 nota.append("=== NOTA FISCAL ===\n");
                 nota.append("Cliente: ").append(supermercado.getUsuarioLogado().getUser()).append("\n");
@@ -184,7 +184,7 @@ public class CompraController {
                     JOptionPane.INFORMATION_MESSAGE
                 );
 
-                // Limpa carrinho e recarrega produtos
+             
                 carrinho.clear();
                 panel.getModeloCarrinho().setRowCount(0);
                 atualizarTotal();
@@ -210,14 +210,14 @@ public class CompraController {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
                     ex.getMessage() + "\nCompra cancelada.",
-                    "Produto Não Encontrado",
+                    "Produto não encontardo",
                     JOptionPane.WARNING_MESSAGE
                 );
                 
             } catch (BancoDadosException ex) {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Erro ao finalizar compra. Tente novamente.",
+                    "Erro ao finalizar compra",
                     "Erro no Sistema",
                     JOptionPane.ERROR_MESSAGE
                 );

@@ -53,7 +53,7 @@ public class ProdutoController {
                 
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Produto cadastrado com sucesso!",
+                    "Produto cadastrado",
                     "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE
                 );
@@ -67,7 +67,7 @@ public class ProdutoController {
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Preço e quantidade devem ser números válidos.",
+                    "Preço e quantidade números válidos",
                     "Erro de Formato",
                     JOptionPane.WARNING_MESSAGE
                 );
@@ -83,7 +83,7 @@ public class ProdutoController {
             } catch (BancoDadosException ex) {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Erro ao cadastrar produto. Tente novamente.",
+                    "Erro ao cadastrar produto",
                     "Erro no Sistema",
                     JOptionPane.ERROR_MESSAGE
                 );
@@ -104,7 +104,7 @@ public class ProdutoController {
             try {
                 int linha = panel.getTabelaProdutos().getSelectedRow();
                 if (linha == -1) {
-                    throw new ValidacaoException("Selecione um produto para editar.");
+                    throw new ValidacaoException("Selecione um produto");
                 }
 
                 String nomeOriginal = (String) panel.getModeloTabela().getValueAt(linha, 0);
@@ -129,7 +129,7 @@ public class ProdutoController {
                 
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Produto atualizado com sucesso!",
+                    "Produto atualizado",
                     "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE
                 );
@@ -160,14 +160,14 @@ public class ProdutoController {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
                     ex.getMessage(),
-                    "Produto Não Encontrado",
+                    "Produto não encontrado",
                     JOptionPane.WARNING_MESSAGE
                 );
                 
             } catch (BancoDadosException ex) {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Erro ao atualizar produto. Tente novamente.",
+                    "Erro ao atualizar produto",
                     "Erro no Sistema",
                     JOptionPane.ERROR_MESSAGE
                 );
@@ -188,14 +188,14 @@ public class ProdutoController {
             try {
                 int linha = panel.getTabelaProdutos().getSelectedRow();
                 if (linha == -1) {
-                    throw new ValidacaoException("Selecione um produto para remover.");
+                    throw new ValidacaoException("Selecione um produto");
                 }
 
                 String nome = (String) panel.getModeloTabela().getValueAt(linha, 0);
 
                 int confirm = JOptionPane.showConfirmDialog(
                     navegador.getJanela(),
-                    "Tem certeza que deseja remover o produto " + nome + "?", 
+                    "Tem certeza que deseja remover " + nome + "?", 
                     "Confirmação",
                     JOptionPane.YES_NO_OPTION
                 );
@@ -205,7 +205,7 @@ public class ProdutoController {
                     
                     JOptionPane.showMessageDialog(
                         navegador.getJanela(), 
-                        "Produto removido com sucesso!",
+                        "Produto removido",
                         "Sucesso",
                         JOptionPane.INFORMATION_MESSAGE
                     );
@@ -232,7 +232,7 @@ public class ProdutoController {
             } catch (BancoDadosException ex) {
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Erro ao remover produto. Tente novamente.",
+                    "Erro ao remover produto",
                     "Erro no Sistema",
                     JOptionPane.ERROR_MESSAGE
                 );

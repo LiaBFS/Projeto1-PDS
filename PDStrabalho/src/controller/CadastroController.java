@@ -31,7 +31,7 @@ public class CadastroController {
                 }
                 
                 if(admin && !senhaAdmin.equals("admin")) {
-                    throw new ValidacaoException("Senha de administrador incorreta. Cadastro não realizado.");
+                    throw new ValidacaoException("Senha de admin incorreta");
                 }
                 
                 Usuarios usuario = new Usuarios(user, cpf, admin);
@@ -39,7 +39,7 @@ public class CadastroController {
                 
                 JOptionPane.showMessageDialog(
                     navegador.getJanela(), 
-                    "Usuário cadastrado com sucesso!",
+                    "Usuário cadastrado",
                     "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE
                 );
